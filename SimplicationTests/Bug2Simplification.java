@@ -7,8 +7,9 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-
+//////////////////////////////////////////////
+//These tests only pass after the bug is fixed
+//////////////////////////////////////////////
 public class Bug2Simplification {
 
 	Dice d1;
@@ -17,7 +18,6 @@ public class Bug2Simplification {
 	Player player;
 	int bet;
 	Game game;
-	List<DiceValue> cdv;
 
 	@Before
 	public void setUp() throws Exception {
@@ -37,7 +37,6 @@ public class Bug2Simplification {
 		d3 = null;
 		player = null;
 		game = null;
-		cdv = null;
 	}
 	
 	@Test
@@ -61,24 +60,33 @@ public class Bug2Simplification {
 				testBettingLimitReachedFail();
 			}
 		}
-
-				//However the game should stop when the balance is 0, which it does not due to the bug
-		assertFalse(player.getBalance() == 0);
-				//The bug results in the game stopping when the balance is 5
-		assertTrue(player.getBalance() == 5);
+		assertTrue(player.getBalance() == 0);
 	}
 	
 			//Bug 2 found inside the Player class' balanceExceedsLimitBy() method
 	@Test
-	public void testBalanceExceedsLimitByMethodLogic() throws Exception {
-		int balance = 5;
-		int limit = 0;
-				//The balanceExceedsLimitBy() method returns a boolean result of the following: balance - bet > limit
-				//By this logic, if the balance is 5, as currently is at the end of all loosing games, and the bet (5) is subtracted then the result is 0, when
-				//compared to the limit (0) the statement determines that 0 is not greater than 0 and returns false when the balance is still 5.  However, we 
-				//want the program to allow the player to bet until their balance is 0, therefore we want this method to return true when the balance is 5, since
-				//the player can bet said 5 and win.
-		assertFalse(balance - bet > limit);
+	public void testBalanceExceedsLimitBy() throws Exception {
+		DiceValue pick = DiceValue.CROWN;
+		while (player.balanceExceedsLimitBy(bet) && player.getBalance() < 200)
+        {
+			game.playRound(player, pick, bet);
+					//If statement nullifies the player in the tearDown() method, since we want to clear the balance, and starts the test again after
+					//reinitializing the objects with the setUp() method.  This is done because we want to eliminate the test resulting in the player winning at 
+					//a balance of 200 since we are only testing what happens when the player losses a game
+			if (player.getBalance() == 200) {
+				tearDown();
+				setUp();
+				testBalanceExceedsLimitBy();
+			}
+		}
+		
+		System.out.println("At program end, End balance: " + player.getBalance());
+		boolean testBool;
+		testBool = player.balanceExceedsLimitBy(bet);
+		System.out.println("At program end, testBalanceExceedsLimitBy() returns: " + testBool);
+		assertTrue(testBool == false);
+		assertTrue(player.getBalance() == 0);
+		
 	}
 
 }
