@@ -1,19 +1,12 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import java.awt.Robot;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.List;
-
-import static org.mockito.Mockito.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.glass.events.KeyEvent;
 //////////////////////////////////////////////
 //These tests only pass after the bug is fixed
 //////////////////////////////////////////////

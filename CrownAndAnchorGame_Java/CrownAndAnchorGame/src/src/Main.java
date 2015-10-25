@@ -39,7 +39,7 @@ public class Main {
                 int turn = 0;
                 while (player.balanceExceedsLimitBy(bet) && player.getBalance() < 200)
                 {
-                    turn++;                    
+                    turn++;
                 	DiceValue pick = DiceValue.getRandom();
                    
                 	System.out.printf("Turn %d: %s bet %d on %s\n",

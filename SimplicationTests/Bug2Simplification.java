@@ -1,8 +1,4 @@
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -48,7 +44,7 @@ public class Bug2Simplification {
 	@Test
 	public void testBettingLimitReachedFail() throws Exception {
 		DiceValue pick = DiceValue.CROWN;
-		while (player.balanceExceedsLimitBy(bet) && player.getBalance() < 200)
+		while (player.balanceExceedsLimitBy(bet))
         {
 			game.playRound(player, pick, bet);
 					//If statement nullifies the player in the tearDown() method, since we want to clear the balance, and starts the test again after
@@ -67,7 +63,7 @@ public class Bug2Simplification {
 	@Test
 	public void testBalanceExceedsLimitBy() throws Exception {
 		DiceValue pick = DiceValue.CROWN;
-		while (player.balanceExceedsLimitBy(bet) && player.getBalance() < 200)
+		while (player.balanceExceedsLimitBy(bet))
         {
 			game.playRound(player, pick, bet);
 					//If statement nullifies the player in the tearDown() method, since we want to clear the balance, and starts the test again after
@@ -83,7 +79,7 @@ public class Bug2Simplification {
 		System.out.println("At program end, End balance: " + player.getBalance());
 		boolean testBool;
 		testBool = player.balanceExceedsLimitBy(bet);
-		System.out.println("At program end, testBalanceExceedsLimitBy() returns: " + testBool);
+		System.out.println("At program end, balanceExceedsLimitBy() returns: " + testBool);
 		assertTrue(testBool == false);
 		assertTrue(player.getBalance() == 0);
 		

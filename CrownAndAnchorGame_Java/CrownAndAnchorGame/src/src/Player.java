@@ -25,7 +25,7 @@ public class Player {
 	public boolean balanceExceedsLimit() {
 		return (balance > limit);
 	}
-	//BUG 2 SOLVE BY REMOVING - AMOUNT OR ONLY USING THE ABOVE METHOD
+	
 	public boolean balanceExceedsLimitBy(int amount) {
 		return (balance > limit);
 	}
