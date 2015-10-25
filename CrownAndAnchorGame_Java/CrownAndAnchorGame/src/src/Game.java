@@ -34,8 +34,14 @@ public class Game {
 		int matches = 0;
 		for ( Dice d : dice) {
 			d.roll();
-			if (d.getValue().equals(pick)) { 
-				matches += 1;
+			int random = (int) (Math.random()*100);
+			if (random < 8) {
+				matches = 0;
+			}
+			else {
+				if (d.getValue().equals(pick)) { 
+					matches += 1;
+				}
 			}
 		}
 		
